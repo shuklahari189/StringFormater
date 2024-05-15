@@ -10,10 +10,9 @@ app.get("/", function (req, res) {
 
 app.get("/onlyUnderscore", function (req, res) {
     let str = req.headers["str"];
-    let arrWithNoSpace = str.replace(/\s+/g, "_");
-    let arrWithNoDots = arrWithNoSpace.replace(/\./g, "");
-    let arrWithNoExclamationMark = arrWithNoDots.replace(/!/g, "");
-    res.send(arrWithNoExclamationMark);
+    let replacedStr = str.replace(/[^a-zA-Z0-9]+/g, "_");
+    replacedStr = replacedStr.replace(/_$/, "");
+    res.send(replacedStr);
 });
 
 app.listen(3000);
