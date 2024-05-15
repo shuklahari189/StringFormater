@@ -6,12 +6,33 @@
         <title>String fomratter</title>
     </head>
     <body>
-        <input type="" />
+        <input type="file" id="fileInput" multiple />
+        <ul id="fileList"></ul>
+        <input type="text" id="input" autocomplete="off" />
+        <p id="output"></p>
     </body>
     <script>
-        let str = req.headers["str"];
-        let replacedStr = str.replace(/[^a-zA-Z0-9]+/g, "_");
-        replacedStr = replacedStr.replace(/_$/, "");
-        res.send(replacedStr);
+        const fileInput = document.getElementById("fileInput");
+        let fileList = document.getElementById("fileList");
+        let input = document.getElementById("input");
+        let output = document.getElementById("output");
+
+        fileInput.addEventListener("change", function () {
+            fileList.innerHTML = ""; // Clear previous list
+            // Loop through each selected file
+            for (let i = 0; i < this.files.length; i++) {
+                let listItem = document.createElement("li");
+                listItem.textContent = this.files[i].name
+                    .slice(0, this.files[i].name.lastIndexOf("."))
+                    .replace(/[^a-zA-Z0-9]+/g, "_")
+                    .replace(/_$/, "");
+                fileList.appendChild(listItem);
+            }
+        });
+        input.addEventListener("change", function () {
+            output.innerHTML = input.value
+                .replace(/[^a-zA-Z0-9]+/g, "_")
+                .replace(/_$/, "");
+        });
     </script>
 </html>
